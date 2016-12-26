@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <TextView
+        android:text="@string/login_desc"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="86dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/desc_login"/>
+
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:inputType="textPersonName"
+        android:drawableLeft="@drawable/ic_account"
+        android:hint="Login"
+        android:padding="10dp"
+        android:layout_below="@+id/desc_login"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="18dp"
+        android:id="@+id/txtUsername"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:inputType="textPassword"
+        android:padding="10dp"
+        android:drawableLeft="@drawable/ic_lock_open"
+        android:hint="Password"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/txtUsername"
+        android:layout_marginEnd="13dp"
+        android:id="@+id/txtpassword"/>
+
+    <Button
+        android:text="Login"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/btn_save"
+        android:textColor="@android:color/white"
+        android:layout_below="@+id/txtpassword"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btnConnect"/>
+
+    <TextView
+        android:text="Forget Password ?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginTop="27dp"
+        android:id="@+id/txtForgetPassword"
+        android:layout_below="@+id/btnConnect"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>
