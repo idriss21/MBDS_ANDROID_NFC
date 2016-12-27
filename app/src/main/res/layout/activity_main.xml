@@ -64,7 +64,7 @@
         android:text="Se connecter "
         android:id="@+id/login"
         android:layout_below="@id/register"
-        android:background="@android:color/white"
+        android:background="@drawable/btn_login"
         android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="15dp"
         android:elevation="10dp"
