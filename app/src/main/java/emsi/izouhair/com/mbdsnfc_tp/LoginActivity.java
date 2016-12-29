@@ -1,5 +1,7 @@
 package emsi.izouhair.com.mbdsnfc_tp;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpPost;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+import cz.msebera.android.httpclient.util.TextUtils;
 import emsi.izouhair.com.mbdsnfc_tp.classes.Person;
 import emsi.izouhair.com.mbdsnfc_tp.sessionManaged.GsonSP;
 
@@ -32,13 +35,17 @@ import emsi.izouhair.com.mbdsnfc_tp.sessionManaged.GsonSP;
 
 
 
+
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener  {
 
     private Button btnConnect;
     private TextView txtForgetPassword;
     private EditText login  , password;
     private Person person;
+    ProgressDialog progressDialog;
     @Override
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -47,6 +54,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         setContentView(R.layout.activity_login);
+
+
 
 
         login = (EditText) findViewById(R.id.txtUsername);
@@ -59,6 +68,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         txtForgetPassword.setOnClickListener(this) ;
         btnConnect.setOnClickListener(this) ;
 
+
     }
 
     @Override
@@ -66,17 +76,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (view.getId())
         {
             case R.id.btnConnect:
-                if( (login.getText() != null || login.getText().length() != 0 ) &&
-                        (password.getText() != null || password.getText().length() != 0 ) )
+
+
+                if(!TextUtils.isEmpty(login.getText()))
                 {
+                    if(!TextUtils.isEmpty(password.getText()))
+                    {
+                        person = new Person();
+                        person.setPassword(password.getText().toString());
+                        person.setEmail(login.getText().toString());
 
-                    person = new Person();
-                    person.setPassword(password.getText().toString());
-                    person.setEmail(login.getText().toString());
-
-                    new LoginTask().execute();
-
+                        new LoginTask().execute();
+                    }else
+                    {
+                       password.setError("empty Lassword");
+                    }
+                }else {
+                    login.setError("empty Login");
                 }
+
+
+
 
 
                break;
@@ -145,16 +165,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
 
+
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             //Afficher un loading "Patientez, inscription en cours..."
+
+            showProgressDialog(true);
         }
 
         @Override
         protected void onPostExecute(String  person) {
             super.onPostExecute(person);
 
+            showProgressDialog(false);
             /*
 
               Modèle de réponse en cas d'erreur
@@ -229,6 +254,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+
+
+
+    public void showProgressDialog(boolean isVisible) {
+        if (isVisible) {
+            if(progressDialog==null) {
+                progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage(this.getResources().getString(R.string.please_wait));
+                progressDialog.setCancelable(false);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        progressDialog = null;
+                    }
+                });
+                progressDialog.show();
+            }
+        }
+        else {
+            if(progressDialog!=null) {
+                progressDialog.dismiss();
+            }
+        }
+    }
 
 
 }

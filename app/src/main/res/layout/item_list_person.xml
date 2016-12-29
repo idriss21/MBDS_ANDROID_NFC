@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/image_item"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/person"
+        android:layout_margin="15dp"
+        app:civ_border_width="2dp"
+        app:civ_border_color="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/username_item"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:text="USERNAME"
+        android:layout_toRightOf="@id/image_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/status_item"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:textSize="10sp"
+        android:textAlignment="center"
+        android:drawableLeft="@drawable/ic_map_marker_grey600_18dp"
+        android:textStyle="italic"
+        android:text="status"
+        android:layout_toRightOf="@id/image_item"
+        android:layout_below="@+id/username_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:clickable="true"
+        android:src="@drawable/ic_dots_horizontal_grey600_18dp"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

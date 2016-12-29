@@ -1,5 +1,8 @@
 package emsi.izouhair.com.mbdsnfc_tp;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,17 +15,23 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpPost;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
+import cz.msebera.android.httpclient.util.TextUtils;
 import emsi.izouhair.com.mbdsnfc_tp.classes.Person;
 import emsi.izouhair.com.mbdsnfc_tp.sessionManaged.GsonSP;
 
@@ -37,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
     private Button signIn;
     private Person person;
     private RadioGroup sexe;
+    ProgressDialog progressDialog;
     private EditText first_name , last_name , email, telephone , password ;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +68,8 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
         signIn = (Button) findViewById(R.id.btnRegister);
         signIn.setOnClickListener(this);
 
+        postData(this,"http://95.142.161.35:8080/person",null);
+
 
 
     }
@@ -70,10 +82,22 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
 
                 //String value = ((RadioButton)findViewById(sexe.getCheckedRadioButtonId() )).getText().toString();
 
-
-                if( (first_name.getText() != null || first_name.getText().length() != 0 ) &&
-                        (last_name.getText() != null || last_name.getText().length() != 0 ) &&
-                        (password.getText() != null || password.getText().length() != 0 ) )
+                if(TextUtils.isEmpty(first_name.getText()))
+                {
+                        first_name.setError("empty first name");
+                }else
+                if(!TextUtils.isEmpty(last_name.getText()))
+                {
+                    first_name.setError("empty last  name");
+                }else
+                if(!TextUtils.isEmpty(email.getText()))
+                {
+                    email.setError("empty last  email");
+                }else
+                if(!TextUtils.isEmpty(password.getText()))
+                {
+                    password.setError("empty last  password");
+                }else
                 {
 
                     person = new Person();
@@ -83,12 +107,11 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
                     person.setTelephone(telephone.getText().toString());
                     person.setPassword(password.getText().toString());
                     person.setCreatedby("Zouhair && Zakaria");
-                   // person.setSexe(value);
+                    // person.setSexe(value);
 
                     new RegisterTask().execute();
 
                 }
-
 
 
                 break;
@@ -104,6 +127,8 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
         String url = "http://95.142.161.35:8080/person/";
         @Override
         protected String  doInBackground(Person... person1) {
+
+
 
 
             /*
@@ -165,12 +190,15 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            //Afficher un loading "Patientez, inscription en cours..."
+           showProgressDialog(true);
         }
 
         @Override
         protected void onPostExecute(String  person) {
             super.onPostExecute(person);
+
+
+            showProgressDialog(false);
             //Enlever le loading
             //Traiter la person
             if (person!=null) {
@@ -205,6 +233,46 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
             //Fermer l'activité Enregistrer
         }
 
-}
 
+
+    }
+
+
+    public void showProgressDialog(boolean isVisible) {
+        if (isVisible) {
+            if(progressDialog==null) {
+                progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage(this.getResources().getString(R.string.please_wait));
+                progressDialog.setCancelable(false);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        progressDialog = null;
+                    }
+                });
+                progressDialog.show();
+            }
+        }
+        else {
+            if(progressDialog!=null) {
+                progressDialog.dismiss();
+            }
+        }
+    }
+
+
+    public static void postData(Context context, String url, HashMap<String,String> jsonObject)
+    {
+        AQuery locaAQuery = new AQuery(context);
+        locaAQuery.ajax(url,jsonObject,JSONObject.class,new AjaxCallback<JSONObject>(){
+            @Override
+            public void callback(String url, JSONObject object, AjaxStatus status) {
+                super.callback(url, object, status);
+
+                Log.e("postData",object.toString());
+            }
+        });
+
+    }
 }

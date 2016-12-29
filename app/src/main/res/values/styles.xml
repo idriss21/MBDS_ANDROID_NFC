@@ -6,6 +6,19 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--<item name="editTextStyle">@style/style1</item>-->
+
+    </style>
+
+    <style name="style1" >
+        <!-- Customize your theme here. -->
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">3dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
     </style>
 
 </resources>

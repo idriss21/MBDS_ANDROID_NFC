@@ -39,13 +39,18 @@ public class GsonSP {
     public  static  Person JsonToClasse(JSONObject JsonObject) throws JSONException {
         Person person = new Person();
         person.setId(JsonObject.getString("id"));
-        person.setNom(JsonObject.getString("nom"));
-        person.setPrenom(JsonObject.getString("prenom"));
-        person.setEmail(JsonObject.getString("email"));
-        person.setTelephone(JsonObject.getString("telephone"));
-        /*if(JsonObject.getString("createdAt") != null) person.setCreatedAt(JsonObject.getString("createdAt"));
-        if(JsonObject.getString("createdBy") != null) person.setCreatedby(JsonObject.getString("createdBy"));*/
+
+        if(JsonObject.has("nom"))   person.setNom(JsonObject.getString("nom"));
+        if(JsonObject.has("prenom"))  person.setPrenom(JsonObject.getString("prenom"));
+        if(JsonObject.has("email")) person.setEmail(JsonObject.getString("email"));
+        if(JsonObject.has("telephone "))person.setTelephone(JsonObject.getString("telephone"));
+        if(JsonObject.has("connected ")) person.setConnect(JsonObject.getBoolean("connected"));
+        if(JsonObject.has("createdAt")) person.setCreatedAt(JsonObject.getString("createdAt"));
+        if(JsonObject.has("createdBy") ) person.setCreatedby(JsonObject.getString("createdBy"));
         return person;
     }
+
+
+
 }
 

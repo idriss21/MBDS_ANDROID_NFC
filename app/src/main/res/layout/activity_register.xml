@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:padding="10dp"
@@ -21,7 +24,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:inputType="textPersonName"
-            android:drawableLeft="@drawable/ic_lock_open"
+            android:drawableLeft="@drawable/ic_account"
             android:hint="Last name "
             android:layout_below="@+id/txtUsername"
             android:layout_alignParentStart="true"
@@ -69,9 +72,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:inputType="textPersonName"
+            android:inputType="textPhonetic"
             android:drawableLeft="@drawable/ic_cellphone_basic"
-            android:hint="Login"
+            android:hint="Phone"
             android:layout_below="@+id/sexeBtn"
             android:layout_alignParentStart="true"
             android:layout_marginTop="5dp"
@@ -82,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:inputType="textPersonName"
+            android:inputType="textEmailAddress"
             android:drawableLeft="@drawable/ic_mail_ru"
             android:hint="Mail"
             android:layout_below="@+id/phone"
@@ -127,7 +130,15 @@
             android:layout_below="@+id/txtpassword2"
             android:layout_marginTop="20dp"
             android:id="@+id/btnRegister"/>
-
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtForgetPassword"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="33dp"
+            android:id="@+id/pBar"/>
 
 
 
@@ -136,3 +147,6 @@
 
 
 </RelativeLayout>
+
+
+        </ScrollView>

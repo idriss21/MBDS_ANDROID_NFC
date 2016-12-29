@@ -15,6 +15,7 @@ public class Person {
     private String password;
     private String createdby;
     private String createdAt;
+    private boolean connect;
 
 
 
@@ -105,5 +106,14 @@ public class Person {
 
     public void setCreatedby(String createdby) {
         this.createdby = createdby;
+    }
+
+
+    public boolean isConnect() {
+        return connect;
+    }
+
+    public void setConnect(boolean connect) {
+        this.connect = connect;
     }
 }
