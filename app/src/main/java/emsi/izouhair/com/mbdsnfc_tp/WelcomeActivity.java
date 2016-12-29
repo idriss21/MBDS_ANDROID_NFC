@@ -1,9 +1,12 @@
 package emsi.izouhair.com.mbdsnfc_tp;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +37,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private TextView msg;
     private List<Person> listPerson ;
+    private ImageView deleteBtn;
+    ProgressDialog progressDialog;
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -42,9 +47,9 @@ public class WelcomeActivity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         setContentView(R.layout.activity_welcome);
-
         //msg = (TextView) findViewById(R.id.welcomeMsg);
         new getPersonrTask().execute();
+
 
     }
 
@@ -63,6 +68,7 @@ public class WelcomeActivity extends AppCompatActivity {
             try{
                 HttpClient client = new DefaultHttpClient();
                 HttpGet get = new HttpGet(url);
+
                 // add header
                 get.setHeader("Content-Type", "application/json");
 
@@ -95,11 +101,14 @@ public class WelcomeActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
 
+            showProgressDialog(true);
         }
 
         @Override
         protected void onPostExecute(String  persons) {
             super.onPostExecute(persons);
+
+            showProgressDialog(false);
 
             //Enlever le loading
             //Traiter la person
@@ -177,4 +186,36 @@ public class WelcomeActivity extends AppCompatActivity {
              */
 
     }
+
+
+
+
+
+// Dialog box
+
+
+
+    public void showProgressDialog(boolean isVisible) {
+        if (isVisible) {
+            if(progressDialog==null) {
+                progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage(this.getResources().getString(R.string.please_wait));
+                progressDialog.setCancelable(false);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        progressDialog = null;
+                    }
+                });
+                progressDialog.show();
+            }
+        }
+        else {
+            if(progressDialog!=null) {
+                progressDialog.dismiss();
+            }
+        }
+    }
+
 }

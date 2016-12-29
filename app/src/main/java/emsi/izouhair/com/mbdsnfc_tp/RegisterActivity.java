@@ -1,37 +1,32 @@
 package emsi.izouhair.com.mbdsnfc_tp;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
-import com.androidquery.AQuery;
-import com.androidquery.callback.AjaxCallback;
-import com.androidquery.callback.AjaxStatus;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 
 import cz.msebera.android.httpclient.HttpResponse;
 import cz.msebera.android.httpclient.client.HttpClient;
 import cz.msebera.android.httpclient.client.methods.HttpPost;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
-import cz.msebera.android.httpclient.util.TextUtils;
 import emsi.izouhair.com.mbdsnfc_tp.classes.Person;
 import emsi.izouhair.com.mbdsnfc_tp.sessionManaged.GsonSP;
 
@@ -68,7 +63,7 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
         signIn = (Button) findViewById(R.id.btnRegister);
         signIn.setOnClickListener(this);
 
-        postData(this,"http://95.142.161.35:8080/person",null);
+        //postData(this,"http://95.142.161.35:8080/person",null);
 
 
 
@@ -80,25 +75,31 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
         switch (view.getId()) {
             case R.id.btnRegister:
 
-                //String value = ((RadioButton)findViewById(sexe.getCheckedRadioButtonId() )).getText().toString();
 
-                if(TextUtils.isEmpty(first_name.getText()))
+                sexe=(RadioGroup)findViewById(R.id.sexe);
+                String gender = ((RadioButton) sexe.findViewById(sexe.getCheckedRadioButtonId())).getText().toString();
+
+
+               if(TextUtils.isEmpty(first_name.getText()))
                 {
                         first_name.setError("empty first name");
                 }else
-                if(!TextUtils.isEmpty(last_name.getText()))
+                if(TextUtils.isEmpty(last_name.getText()))
                 {
-                    first_name.setError("empty last  name");
+                    last_name.setError("empty last  name");
                 }else
-                if(!TextUtils.isEmpty(email.getText()))
+                if(TextUtils.isEmpty(email.getText()))
                 {
                     email.setError("empty last  email");
                 }else
-                if(!TextUtils.isEmpty(password.getText()))
+                if(TextUtils.isEmpty(password.getText()))
                 {
                     password.setError("empty last  password");
                 }else
                 {
+
+
+
 
                     person = new Person();
                     person.setNom(first_name.getText().toString());
@@ -107,14 +108,17 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
                     person.setTelephone(telephone.getText().toString());
                     person.setPassword(password.getText().toString());
                     person.setCreatedby("Zouhair && Zakaria");
-                    // person.setSexe(value);
+                    person.setSexe(gender);
 
                     new RegisterTask().execute();
 
                 }
 
 
+
                 break;
+
+
 
 
         }
@@ -262,7 +266,9 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
     }
 
 
-    public static void postData(Context context, String url, HashMap<String,String> jsonObject)
+
+
+   /* public static void postData(Context context, String url, HashMap<String,String> jsonObject)
     {
         AQuery locaAQuery = new AQuery(context);
         locaAQuery.ajax(url,jsonObject,JSONObject.class,new AjaxCallback<JSONObject>(){
@@ -274,5 +280,5 @@ public class RegisterActivity extends AppCompatActivity  implements View.OnClick
             }
         });
 
-    }
+    }*/
 }
